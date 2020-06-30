@@ -19,6 +19,13 @@ LABEL_CHOICES = (
     ('S', 'Special Deal')
 )
 
+class Vendor(models.Model):
+    full_name = models.CharField(blank=True, null=True, max_length=20)
+    v_name = models.CharField(blank=True, null=True, max_length=20)
+    email = models.EmailField(blank=True, null=True, max_length=20)
+    #cityField
+    password = models.CharField(blank=True, null=True, max_length=20)
+    
 
 
 class Item(models.Model):
@@ -26,10 +33,14 @@ class Item(models.Model):
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
-    label = models.CharField(choices=LABEL_CHOICES, max_length=1)
+    label = models.CharField(choices=LABEL_CHOICES, max_length=1, blank=True, null=True)
     slug = models.SlugField()
     description = models.TextField()
-    
+    image = models.ImageField()
+    image_1 = models.ImageField(blank=True, null=True)
+    image_2 = models.ImageField(blank=True, null=True)
+    image_3 = models.ImageField(blank=True, null=True)
+    #vendor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -45,6 +56,15 @@ class Item(models.Model):
 
     def get_remove_single_item_from_cart_url(self):
        return reverse('base_app:remove-single-item-from-cart', kwargs={'slug': self.slug})
+    
+    if discount_price:
+        if type(discount_price) == 'NoneType':
+            discount_price = 0.0
+        
+        def get_discount_percentage(self):
+                percentage = int(((self.price - self.discount_price)/self.price)*100)
+                return percentage
+   
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -74,6 +94,8 @@ class Order(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     ordered = models.BooleanField(default=False)
     ordered_date = models.DateTimeField()
+    billing_address = models.ForeignKey(
+        'BillingAddress', on_delete=models.SET_NULL, blank=True, null=True)
     
 
     def __str__(self):
@@ -84,3 +106,15 @@ class Order(models.Model):
         for order_item in self.items.all():
             total += order_item.get_final_price()
         return total
+
+class BillingAddress(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=13)
+    city = models.CharField(max_length=20)
+    order_notes = models.CharField(max_length=200)
+
+    def __str__(self):
+
+        return self.user.username
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+{% if items %}
+<div class="container" >
+    <h4><i>Showing search results for <bold>'{{ searched_item }}'</bold></i></h4>
+</div>
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+       <div class="col-md-12">
+        <div class="row">
+           
+        
+            
+                
+                    <!-- tab -->
+                    
+                        
+{% for item in items %}
+
+
+
+
+                        
+                            <!-- product -->
+                                        <div class="">
+										<div class="product col-md-3">
+											<a href="{{ item.get_absolute_url }}">
+											<div class="product-img">
+												{% comment %}
+												<img src="{% static './img/product01.png' %}" alt="">
+												{% endcomment %}
+												<img src="{{ item.image.url }}" style="height:235px;" alt="">
+												<div class="product-label">
+													{% if item.discount_price > 0 %}
+													<span class="sale">
+														-{{ item.get_discount_percentage }}%
+														</span>
+														{% endif %}
+														<span class="new">{{ item.get_label_display }}</span>
+												</div>
+											</div>
+											
+											<div class="product-body">
+												<p class="product-category">{{ item.get_category_display }}</p>
+												<h3 class="product-name"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+												<h4 class="product-price">
+													{% if item.discount_price %}
+													${{ item.discount_price }}
+													{% else %}
+													${{ item.price }}
+													{% endif %}
+													<del class="product-old-price">
+														{% if item.discount_price %}
+														${{ item.price }}
+														{% endif %}
+													</del></h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+											</div>
+                                        </div>
+                                    </div>
+                                        
+										<!-- /product -->
+
+
+										
+
+
+{% endfor %}
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+{% endif %}
+{% endblock %}

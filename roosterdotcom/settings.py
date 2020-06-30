@@ -27,7 +27,7 @@ SECRET_KEY = 'o9dmommxac3arl1gp*aru&nqvo6+&@58!*%z6p4y_3@79#6&xk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.115', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'base_app',
+    'phone_field',
 ]
 
 MIDDLEWARE = [
@@ -126,10 +127,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 AUTHENTICATION_BACKENDS = (
 
@@ -143,6 +146,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
+LOGIN_REDIRECT_URL ='/'
 
 # CRISPY FORMS
 

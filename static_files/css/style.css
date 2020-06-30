@@ -1,6 +1,4 @@
 /*
-Template Name: Electro - HTML Ecommerce Template
-Author: yaminncco
 
 Colors:
 	Body 		: #333
@@ -59,6 +57,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   color: #333;
+  background-color: #ededed;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -172,6 +171,44 @@ ul, ol {
 }
 
 
+fieldset, label {margin:0; padding: 0;}
+.rating > input {display: none;}
+.rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005"
+}
+
+.rating > .half:before {
+  content:"\f089";
+  position: absolute;
+}
+
+.rating > label {
+  color: #ddd;
+  float: right;
+}
+
+.rating > input:checked ~ label,
+
+.rating:not(:checked) > label:hover,
+
+.rating:not(:checked) > label:hover ~ label {
+  color: #e78617;
+}
+
+.rating > input:checked + label:hover,
+
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+
+.rating > input:checked ~ label:hover ~ label {
+  color: #e78617;
+}
+
+
 /*----------------------------*\
 	Buttons
 \*----------------------------*/
@@ -179,7 +216,7 @@ ul, ol {
 .primary-btn {
   display: inline-block;
   padding: 12px 30px;
-  background-color: #238106;
+  background-color: #36ab13;
   border: none;
   border-radius: 40px;
   color: #FFF;
@@ -189,6 +226,12 @@ ul, ol {
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
 }
+
+.primary-btn.disabled {
+  opacity: 0.65; 
+  cursor: not-allowed;
+}
+
 
 .primary-btn:hover, .primary-btn:focus {
   opacity: 0.9;
@@ -202,7 +245,7 @@ ul, ol {
 /*-- Text input --*/
 
 .input {
-  height: 30px;
+  height: 40px;
   padding: 0px 15px;
   border: 1px solid #E4E7ED;
   background-color: #FFF;
@@ -269,10 +312,10 @@ textarea.input {
 /*-- Select input --*/
 
 .input-select {
-  padding: 0px 15px;
+  
   background: #FFF;
   border: 1px solid #E4E7ED;
-  height: 30px;
+  height: 40px;
 }
 
 /*-- checkbox & radio input --*/
@@ -532,7 +575,7 @@ textarea.input {
 #header {
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #fffdd5;
+  background-color: #FFF;
 }
 
 .header-logo {
@@ -566,9 +609,9 @@ textarea.input {
 }
 
 .header-search form .search-btn {
-  height: 30px;
-  width: 100px;
-  background: #238106;
+  height: 40px;
+  width: 50px;
+  background: #36ab13;
   color: #FFF;
   font-weight: 700;
   border: none;
@@ -631,7 +674,7 @@ textarea.input {
   position: absolute;
   width: 300px;
   background: #FFF;
-  padding: 15px;
+
   -webkit-box-shadow: 0px 0px 0px 2px #E4E7ED;
   box-shadow: 0px 0px 0px 2px #E4E7ED;
   z-index: 99;
@@ -647,7 +690,6 @@ textarea.input {
 
 .cart-dropdown .cart-list {
   max-height: 180px;
-  overflow-y: scroll;
   margin-bottom: 15px;
 }
 
@@ -667,7 +709,7 @@ textarea.input {
 }
 
 .cart-dropdown .cart-list .product-widget .product-body .product-price {
-  color: #2B2D42;
+  color: #FDFFF5;
 }
 
 .cart-dropdown .cart-btns {
@@ -677,8 +719,10 @@ textarea.input {
 .cart-dropdown .cart-btns>a {
   display: inline-block;
   width: calc(50% - 0px);
-  padding: 12px;
+  padding: 6px;
   background-color: #36ab13;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
   color: #FFF;
   text-align: center;
   font-weight: 700;
@@ -689,6 +733,10 @@ textarea.input {
 .cart-dropdown .cart-btns>a:first-child {
   margin-right: -4px;
   background-color: #1e1f29;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 .cart-dropdown .cart-btns>a:hover {
@@ -790,7 +838,7 @@ textarea.input {
   }
   .main-nav>li>a {
     padding: 15px;
-    color: #FFF;
+    color: rgb(68, 126, 20);
   }
 }
 
@@ -877,6 +925,7 @@ textarea.input {
 \*----------------------------*/
 
 .product {
+  border-radius: 10px;
   position: relative;
   margin: 15px 0px;
   -webkit-box-shadow: 0px 0px 0px 0px #E4E7ED, 0px 0px 0px 1px #E4E7ED;
@@ -896,6 +945,7 @@ textarea.input {
 
 .product .product-img>img {
   width: 100%;
+  border-radius: 10px;
 }
 
 .product .product-img .product-label {
@@ -925,6 +975,7 @@ textarea.input {
 .product .product-body {
   position: relative;
   padding: 15px;
+  border-radius: 10px;
   background-color: #FFF;
   text-align: center;
   z-index: 20;
@@ -1044,7 +1095,11 @@ textarea.input {
   right: 1px;
   bottom: 1px;
   padding: 15px;
-  background: #1e1f29;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #36ab13;
+  border-radius: 50px;
+  background: #FFF;
   text-align: center;
   -webkit-transform: translateY(0%);
   -ms-transform: translateY(0%);
@@ -1052,6 +1107,7 @@ textarea.input {
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
   z-index: 2;
+  padding-top: 15px;
 }
 
 .product:hover .add-to-cart {

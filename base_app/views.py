@@ -5,9 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
-from .models import Item, OrderItem, Order 
+from .models import Item, OrderItem, Order, BillingAddress 
 from django.contrib import messages
 from .forms import CheckoutForm
+from django.db.models import Q
 
 
 class HomeView(ListView):
@@ -41,9 +42,9 @@ class OrderSummaryView(LoginRequiredMixin, View):
         
 
 
-def product(request):
-
-    return render(request, "product.html")
+#def product(request):
+    #order = Order.objects.get(user=self.request.user, ordered=False)
+    #return render(request, "product.html", {'cart':order})
 
 
 class CheckoutView(View):
@@ -51,18 +52,48 @@ class CheckoutView(View):
     def get(self, *args, **kwargs):
         #form
         form = CheckoutForm()
+        order = Order.objects.get(user=self.request.user, ordered=False)
         context = {
-            'form': form
+            'form': form, 'object': order
         }
 
         return render(self.request, "checkout.html", context)
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
 
-        if form.is_valid():
-            print("The form is valid")
+        print(self.request.POST)
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                address=form.cleaned_data.get('address')
+                phone=form.cleaned_data.get('phone')
+                city=form.cleaned_data.get('city')
+                different_shipping_address=form.cleaned_data.get('different_shipping_address')
+                order_notes=form.cleaned_data.get('order_notes')
+                save_info=form.cleaned_data.get('save_info')
+                payment_option=form.cleaned_data.get('payment _option')
+                terms=form.cleaned_data.get('terms')
+                billing_address = BillingAddress(
+                    user = self.request.user,
+                    address = address,
+                    phone = phone,
+                    city = city,
+                    order_notes = order_notes
+                )
+                billing_address.save()
+                order.billing_address = billing_address
+                order.save()
+
+                return redirect('base_app:checkout')
+            messages.warning(self.request, "Failed to checkout")
             return redirect('base_app:checkout')
 
+    
+        except ObjectDoesNotExist:
+            messages.error(self.request, "You do not have an active order")
+            return redirect("base_app:order-summary")
+        
+            
          
 #add to cart
 @login_required
@@ -216,4 +247,28 @@ def remove_from_cart_order_summary(request, slug):
         messages.info(request, "You do not have an active order")
         return redirect("base_app:order-summary")
 
-    
+
+   
+def searchResult(request):
+    product = None
+    object_list = None
+    if 'search' in request.GET:
+        product = request.GET.get('search')
+        if product != '':
+            try:
+                object_list = Item.objects.all().filter(Q(title__icontains=product) | Q(description__icontains=product) | Q(category__icontains=product))   
+            except ObjectDoesNotExist:
+                object_list = None
+                messages.error(request, "Sorry there are no search results")
+            return render(request, "search.html", {'items':object_list, 'searched_item':product})
+        else:
+            return redirect("base_app:item-list")
+    else:
+        messages.error(request, "Sorry there are no search results")
+        return render(request, "search.html", {})
+
+#TODO:reviews view
+#costumer care
+#sell
+#topselling
+

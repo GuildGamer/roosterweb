@@ -15,10 +15,8 @@
 				<div class="row">
 
 
-						<form>
-							{% csrf_token %}
-							{{ form }}
-						</form>
+						<form method="POST" class="container">
+						{% csrf_token %}
 
 					<div class="col-md-7">
 						<!-- Billing Details -->
@@ -33,13 +31,22 @@
 								{{ form.address }}
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
+								{% comment %}
+									<input class="input" type="tel" name="city" placeholder="City">
+								{% endcomment %}
+								{{ form.city}}
 							</div>
 							<div class="form-group">
+								{% comment %}
 								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+								{% endcomment %}
+								{{ form.zip_code }}
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone">
+								{% comment %}
+								<input class="input" type="tel" name="tel" placeholder="Phone">
+								{% endcomment %}
+								{{ form.phone}}
 							</div>
 						</div>
 						<!-- /Billing Details -->
@@ -47,31 +54,43 @@
 						<!-- Shiping Details -->
 						<div class="shiping-details">
 							<div class="section-title">
-								<h3 class="title">Shiping address</h3>
+								<h3 class="title">Delivery address</h3>
 							</div>
 							<div class="input-checkbox">
-								<input type="checkbox" id="shiping-address">
+								{% comment %}
+									<input type="checkbox" id="shiping-address">
+								{% endcomment %}
+								{{ form.different_shipping_address }}
 								<label for="shiping-address">
 									<span></span>
-									Ship to a diffrent address?
+									Deliver to a different address?
 								</label>
 								<div class="caption">
 									<div class="form-group">
-										<input class="input" type="text" name="address" placeholder="Address">
+										{% comment %}
+											<input class="input" type="text" name="address" placeholder="Address">
+										{% endcomment %}
+										{{ form.address_diff }}
 									</div>
 									<div class="form-group">
-										<input class="input" type="text" name="city" placeholder="City">
+										{% comment %}
+											<input class="input" type="tel" name="city" placeholder="City">
+										{% endcomment %}
+										{{ form.city_diff}}
 									</div>
 									<div class="form-group">
-										<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-									</div>
-									<div class="form-group">
-										<input class="input" type="tel" name="tel" placeholder="Telephone">
+										{% comment %}
+											<input class="input" type="tel" name="tel" placeholder="Phone">
+										{% endcomment %}
+										{{ form.phone_diff}}
 									</div>
 								</div>
 																
 								<div class="input-checkbox">
+									{% comment %}
 									<input type="checkbox" id="save_info">
+									{% endcomment %}
+									{{ form.save_info }}
 									<label for="save_info">
 										<span></span>
 										Save this information for next time
@@ -84,7 +103,10 @@
 
 						<!-- Order notes -->
 						<div class="order-notes">
+							{% comment %}
 							<textarea class="input" placeholder="Order Notes"></textarea>
+							{% endcomment %}	
+							{{ form.order_notes }}
 						</div>
 						<!-- /Order notes -->
 						
@@ -96,68 +118,75 @@
 						<div class="section-title text-center">
 							<h3 class="title">Your Order</h3>
 						</div>
+						
+						<div class="col-6">
+						<div class="table-resposive text-nowrap">
 						<div class="order-summary">
-							<div class="order-col">
-								<div><strong>PRODUCT</strong></div>
-								<div><strong>TOTAL</strong></div>
-							</div>
-							<div class="order-products">
-								<div class="order-col">
-									<div>1x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
-							</div>
-							<div class="order-col">
-								<div>Shiping</div>
-								<div><strong>FREE</strong></div>
-							</div>
-							<div class="order-col">
-								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
-							</div>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col""><strong>PRODUCT</strong></th>
+									<th scope="col" class="text-right"><strong>TOTAL</strong></th>
+								</tr>
+							</thead>
+							<tbody>
+								<div class="order-products">
+									{% for order_item in object.items.all %}
+									<tr>
+									<td>{{ order_item.quantity }}x {{ order_item.item.title }}</td>
+									<td class="text-right">
+										{% if order_item.item.discount_price %}
+											${{ order_item.get_total_discount_item_price }}
+										{% else %}
+											${{ order_item.get_total_item_price }}
+										{% endif %}
+									</td>
+									</tr>
+									{% endfor %}
+									<tr>
+										<td>Delivery</td>
+										<td class="text-right">FREE</td>
+									</tr>
+									<tr>
+										<td>TOTAL</td>
+										<td class="text-right"><strong class="order-total">{{object.get_total}}</strong></td>
+									</tr>
+								</tbody>
+						</table>
 						</div>
+						</div>
+						</div>
+						
+						
 						<div class="payment-method">
+							{% for value, name in form.fields.payment_option.choices %}
 							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-1">
-								<label for="payment-1">
-									<span></span>
-									Direct Bank Transfer
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
+								
+								<input type="radio" name="payment_option" value="{{ value }}" id="{{ name }}" required>
+								<label for="{{ name }}">
+									<span></span>{{ name }}</label>
 							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-2">
-								<label for="payment-2">
-									<span></span>
-									Flutterwave
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-3">
-								<label for="payment-3">
-									<span></span>
-									Paypal System
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
+							{% endfor %}
 						</div>
 						<div class="input-checkbox">
-							<input type="checkbox" id="terms">
-							<label for="terms">
+							{% comment %}
+							<input type="checkbox" id="terms">	
+							{% endcomment %}
+							{{ form.terms }}
+								<label for="terms">
 								<span></span>
 								I've read and accept the <a href="#">terms & conditions</a>
 							</label>
 						</div>
-						<a href="#" class="primary-btn order-submit">Place order</a>
+						{% if form.terms %}
+							<button class="primary-btn order-submit" type="submit" style="width: initial;">Place order</button>
+						{% else %}
+							<button class="primary-btn order-submit" type="submit" disabled>Place order</button>
+						{% endif %}
+							
 					</div>
 					<!-- /Order Details -->
+				</form>
 				</div>
 				<!-- /row -->
 			</div>

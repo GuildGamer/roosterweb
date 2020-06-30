@@ -7,9 +7,8 @@
 
 {% block content %}
 
-<div class="section container">
-<div class="order-details col-md-5">
-<div class=" text-center">
+<div class="center-div">
+<div class="section container">    
 <h1>{% trans "Sign In" %}</h1>
 
 {% get_providers as socialaccount_providers %}
@@ -32,25 +31,31 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 {% include "socialaccount/snippets/login_extra.html" %}
 
 {% else %}
+
 <p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+<a href="{{ signup_url }}"><bold><i>sign up</i></bold></a> first.{% endblocktrans %}</p>
 {% endif %}
 
 <form class="login" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
+  <div class="form-group">
   {{ form|crispy }}
+</div>
   {% if redirect_field_value %}
   <div class="form-group">
   <input class="input" type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   </div>
   {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <a href="#" class="primaryAction primary-btn order-submit" type="submit">{% trans "Sign In" %}</a>
+  <a class="button secondaryAction primary-btn"" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="primaryAction primary-btn order-submit" type="submit">{% trans "Sign In" %}</button>
 </form>
 </div>
 </div>
-</div>
-</div>
+
+
+
+
+
 
 
 

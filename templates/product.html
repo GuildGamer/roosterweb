@@ -3,52 +3,37 @@
 
 {% block content %}
 {% load static %}
-		<!-- BREADCRUMB -->
-		<div id="breadcrumb" class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Headphones</a></li>
-							<li class="active">Product name goes here</li>
-						</ul>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /BREADCRUMB -->
+		
 
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
-			<div class="container">
+			<div class="container" style="background-color: white;  border-radius: 8px; padding-top: 15px; padding-bottom: 15px;">
 				<!-- row -->
 				<div class="row">
 					<!-- Product main img -->
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							<div class="product-preview">
-								<img src="./img/product01.png" alt="">
+								<img src="{{object.image.url}}" alt="">
 							</div>
-
+							{% if object.image_1 %}
 							<div class="product-preview">
-								<img src="./img/product03.png" alt="">
+								<img src="{{object.image_1.url}}" alt="">
 							</div>
+							{% endif %}
 
+							{% if object.image_2 %}
 							<div class="product-preview">
-								<img src="./img/product06.png" alt="">
+								<img src="{{object.image_2.url}}" alt="">
 							</div>
+							{% endif %}
 
+							{% if object.image_3 %}
 							<div class="product-preview">
-								<img src="./img/product08.png" alt="">
+								<img src="{{object.image_3.url}}" alt="">
 							</div>
+							{% endif %}
 						</div>
 					</div>
 					<!-- /Product main img -->
@@ -57,20 +42,24 @@
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							<div class="product-preview">
-								<img src="./img/product01.png" alt="">
+								<img src="{{object.image.url}}" alt="">
 							</div>
-
+							{% if object.image_1 %}
 							<div class="product-preview">
-								<img src="./img/product03.png" alt="">
+								<img src="{{object.image_1.url}}" alt="">
 							</div>
+							{% endif %}
 
+							{% if object.image_2 %}
 							<div class="product-preview">
-								<img src="./img/product06.png" alt="">
+								<img src="{{object.image_2.url}}" alt="">
 							</div>
-
+							{% endif %}
+							{% if object.image_3 %}
 							<div class="product-preview">
-								<img src="./img/product08.png" alt="">
+								<img src="{{object.image_3.url}}" alt="">
 							</div>
+							{% endif %}
 						</div>
 					</div>
 					<!-- /Product thumb imgs -->
@@ -95,14 +84,15 @@
 									${{ object.discount_price }}
 									{% else %}
 									${{ object.price }}
-									{% endif %} <del class="product-old-price">
+									{% endif %} 
+									<del class="product-old-price">
 										{% if object.discount_price %}
 										${{ object.price }}
 										{% endif %}</del></h3>
 								<span class="product-available">In Stock</span>
 							</div>
 							<p>{{ object.description }}</p>
-
+							{% comment %}
 							<div class="product-options">
 								<label>
 									Size
@@ -117,18 +107,21 @@
 									</select>
 								</label>
 							</div>
+							{% endcomment %}
 
 							<div class="add-to-cart">
+								{% comment %}
 								<div class="qty-label">
 									Qty
 									<div class="input-number">
-										<input type="number">
-										<span class="qty-up">+</span>
-										<span class="qty-down">-</span>
+										<input type="number" placeholder="">
+										<span class="qty-up"><a href="{{ object.get_add_to_cart_url }}">+</a></span>
+										<span class="qty-down"><a href="{{object.get_remove_single_item_from_cart_url_product}}">-</a></span>
 									</div>
 								</div>
-								<a href="{{ object.get_add_to_cart_url }}"class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
-								<a href="{{ object.get_remove_from_cart_url }}"class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> remove </a>
+								{% endcomment %}
+								<a href="{{ object.get_add_to_cart_url }}"class="add-to-cart-btn"><i class="fa fa-shopping-cart" style="color: #e78617;"></i> add to cart</a>
+								<a href="{{ object.get_remove_from_cart_url }}"class="add-to-cart-btn"><i class="fa fa-shopping-cart" style="color: #e78617;"></i> remove </a>
 							</div> 
 							<ul class="product-links">
 								<li>Category:</li>
@@ -148,12 +141,11 @@
 					<!-- /Product details -->
 
 					<!-- Product tab -->
-					<div class="col-md-12">
+					<div class="col-md-12" style="padding-left: 15px; padding-right: 15px;">
 						<div id="product-tab">
 							<!-- product tab nav -->
 							<ul class="tab-nav">
 								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-								<li><a data-toggle="tab" href="#tab2">Details</a></li>
 								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
 							</ul>
 							<!-- /product tab nav -->
@@ -169,16 +161,6 @@
 									</div>
 								</div>
 								<!-- /tab1  -->
-
-								<!-- tab2  -->
-								<div id="tab2" class="tab-pane fade in">
-									<div class="row">
-										<div class="col-md-12">
-											<p>{{ object.description }}</p>
-										</div>
-									</div>
-								</div>
-								<!-- /tab2  -->
 
 								<!-- tab3  -->
 								<div id="tab3" class="tab-pane fade in">
@@ -331,6 +313,12 @@
 										</div>
 										<!-- /Reviews -->
 
+
+
+										
+
+
+
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
@@ -341,11 +329,26 @@
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
+															<fieldset class="rating">
+																<input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+																<input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+																<input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+																<input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+																<input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+																<input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad  - 2.5 stars"></label>
+																<input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+																<input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+																<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 stars"></label>
+																<input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+															</fieldset>
+
+															{% comment %}
 															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
 															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
 															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
 															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
 															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+															{% endcomment %}
 														</div>
 													</div>
 													<button class="primary-btn">Submit</button>
