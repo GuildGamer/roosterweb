@@ -70,10 +70,10 @@
 							<h2 class="product-name">{{ object.title }}</h2>
 							<div>
 								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
+									<i class="fa fa-star" style="color: #e78617;"></i>
+									<i class="fa fa-star" style="color: #e78617;"></i>
+									<i class="fa fa-star" style="color: #e78617;"></i>
+									<i class="fa fa-star" style="color: #e78617;"></i>
 									<i class="fa fa-star-o"></i>
 								</div>
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
@@ -81,13 +81,13 @@
 							<div>
 								<h3 class="product-price">
 									{% if object.discount_price %}
-									${{ object.discount_price }}
+									₦{{ object.discount_price }}
 									{% else %}
-									${{ object.price }}
+									₦{{ object.price }}
 									{% endif %} 
 									<del class="product-old-price">
 										{% if object.discount_price %}
-										${{ object.price }}
+										₦{{ object.price }}
 										{% endif %}</del></h3>
 								<span class="product-available">In Stock</span>
 							</div>
@@ -127,6 +127,10 @@
 								<li>Category:</li>
 								<li><a href="#">{{ object.get_category_display }}</a></li>
 							</ul>
+							<ul class="product-links">
+								<li>Shop:</li>
+								<li><a href="#">{{ object.vendor }}</a></li>
+							</ul>
 
 							<ul class="product-links">
 								<li>Share:</li>
@@ -161,7 +165,7 @@
 									</div>
 								</div>
 								<!-- /tab1  -->
-
+								
 								<!-- tab3  -->
 								<div id="tab3" class="tab-pane fade in">
 									<div class="row">
@@ -322,24 +326,28 @@
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
+												<form class="review-form"  method="POST">
+													{% csrf_token %}
+													{% comment %}<input class="input" type="text" placeholder="Your Name"> {% endcomment %}
+													<div class="form-group">
+														{{ form.name }}
+													</div>
+
 													<textarea class="input" placeholder="Your Review"></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
 															<fieldset class="rating">
-																<input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
-																<input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-																<input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
-																<input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-																<input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
-																<input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad  - 2.5 stars"></label>
-																<input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-																<input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-																<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 stars"></label>
-																<input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+																<input type="radio" id="star5" name="rating" value="5" name="rating"/><label class="full" for="star5" title="Awesome - 5 stars"></label>
+																<input type="radio" id="star4half" name="rating" value="4 and a half" name="rating"/><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+																<input type="radio" id="star4" name="rating" value="4"  name="rating"/><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+																<input type="radio" id="star3half" name="rating" value="3 and a half" name="rating"/><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+																<input type="radio" id="star3" name="rating" value="3" name="rating"/><label class="full" for="star3" title="Meh - 3 stars"></label>
+																<input type="radio" id="star2half" name="rating" value="2 and a half" name="rating"/><label class="half" for="star2half" title="Kinda bad  - 2.5 stars"></label>
+																<input type="radio" id="star2" name="rating" value="2" name="rating"/><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+																<input type="radio" id="star1half" name="rating" value="1 and a half" name="rating"/><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+																<input type="radio" id="star1" name="rating" value="1" name="rating"/><label class="full" for="star1" title="Sucks big time - 1 stars"></label>
+																<input type="radio" id="starhalf" name="rating" value="half" name="rating"/><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 															</fieldset>
 
 															{% comment %}
@@ -352,9 +360,9 @@
 														</div>
 													</div>
 													<button class="primary-btn">Submit</button>
-												</form>
 											</div>
 										</div>
+									</form>
 										<!-- /Review Form -->
 									</div>
 								</div>

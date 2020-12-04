@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% load static %}
+
+<div class="section">
+   <div class="container" style="background-color: white;  border-radius: 8px;">
+    <div class="row">
+
+        {% if request.seller.is_authenticated %}
+<form method="POST">
+    <div class="col-md-7">
+    <div class="section-title">
+        <h3 class="title">Store Management</h3>
+    </div>
+        {% csrf_token %}
+
+        <div class="input-checkbox">
+            <input type="checkbox" id="shiping-address">
+            <label for="shiping-address">
+                <span></span>
+                New Item<i class="fa fa-plus"></i>
+            </label>
+            <div class="caption">
+                <div class="form-group">
+                    Item Title*
+                     {{ new_item.title }}
+                </div>
+                <div class="form-group">
+                    Item Price* {{ new_item.price }}
+                </div>
+                <div class="form-group">
+                    Item Discount Price {{ new_item.discount_price }}
+                </div>
+                <div class="form-group">
+                    Item Category* {{ new_item.category }}
+                </div>
+                {% comment %}label{% endcomment %}
+                <div class="form-group">
+                    Item ID* {{ new_item.slug }}
+                </div>
+                <div class="form-group">
+                    Item Description* {{ new_item.description }}
+                </div>
+                <div class="form-group">
+                    First Image* {{ new_item.image }}
+                </div>
+                <div class="form-group">
+                    Second Image* {{ new_item.image_1 }}
+                </div>
+                <div class="form-group">
+                    Third Image {{ new_item.image_2 }}
+                </div>
+                <div class="form-group">
+                    Fourth Image {{ new_item.image_3 }}
+                </div>
+                    
+                <div style="padding-bottom: 15px; padding-top: 15px;">
+                <button class="primary-btn order-submit" type="submit">save</button>        
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    </form>
+    {% endif %}
+</div>
+</div>
+</div>
+
+{% endblock %}

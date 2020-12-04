@@ -94,6 +94,19 @@ ul, ol {
   padding: 50px;
 }
 
+.center
+{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+.center_new
+{
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+}
+
 
 .order-summary {
   width: 100px;
@@ -808,7 +821,7 @@ textarea.input {
     top: 0;
     background: #15161D;
     height: 100vh;
-    max-width: 250px;
+    max-width: 100px;
     width: 0%;
     overflow: hidden;
     z-index: 22;
@@ -838,7 +851,7 @@ textarea.input {
   }
   .main-nav>li>a {
     padding: 15px;
-    color: rgb(68, 126, 20);
+    color: #FFF;
   }
 }
 
@@ -1932,14 +1945,13 @@ textarea.input {
 .order-details {
   position: relative;
   padding: 0px 30px 30px;
-  border-right: 1px solid #E4E7ED;
   border-left: 1px solid #E4E7ED;
-  border-bottom: 1px solid #E4E7ED;
+  
 }
 
 .order-details:before {
   content: "";
-  position: absolute;
+  position: fixed;
   left: -1px;
   right: -1px;
   top: -15px;

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.shortcuts import reverse
 # Create your models here.
 
@@ -20,11 +21,16 @@ LABEL_CHOICES = (
 )
 
 class Vendor(models.Model):
-    full_name = models.CharField(blank=True, null=True, max_length=20)
-    v_name = models.CharField(blank=True, null=True, max_length=20)
-    email = models.EmailField(blank=True, null=True, max_length=20)
-    #cityField
-    password = models.CharField(blank=True, null=True, max_length=20)
+    seller = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    
+    shop_name = models.CharField(blank=True, null=True, max_length=20)
+    phone_number = models.CharField(blank=True, null=True, max_length=20)
+    city = models.CharField(blank=True, null=True, max_length=20) #remember to make this such t password = models.CharField(blank=True, null=True, max_length=20)
+    store_category = models.CharField(blank=True, null=True, max_length=20) #remember to make this such that it gives you a list to choose from
+
+    def __str__(self):
+        return self.shop_name
+
     
 
 
@@ -40,7 +46,7 @@ class Item(models.Model):
     image_1 = models.ImageField(blank=True, null=True)
     image_2 = models.ImageField(blank=True, null=True)
     image_3 = models.ImageField(blank=True, null=True)
-    #vendor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -64,6 +70,12 @@ class Item(models.Model):
         def get_discount_percentage(self):
                 percentage = int(((self.price - self.discount_price)/self.price)*100)
                 return percentage
+
+class Review(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    review = models.CharField(max_length=250)
+
    
 
 class OrderItem(models.Model):

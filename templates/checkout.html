@@ -10,7 +10,7 @@
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
-			<div class="container">
+			<div class="container" style="background-color: white;  border-radius: 8px;">
 				<!-- row -->
 				<div class="row">
 
@@ -57,9 +57,6 @@
 								<h3 class="title">Delivery address</h3>
 							</div>
 							<div class="input-checkbox">
-								{% comment %}
-									<input type="checkbox" id="shiping-address">
-								{% endcomment %}
 								{{ form.different_shipping_address }}
 								<label for="shiping-address">
 									<span></span>
@@ -102,10 +99,7 @@
 						
 
 						<!-- Order notes -->
-						<div class="order-notes">
-							{% comment %}
-							<textarea class="input" placeholder="Order Notes"></textarea>
-							{% endcomment %}	
+						<div class="order-notes" style="padding-bottom: 15px;">	
 							{{ form.order_notes }}
 						</div>
 						<!-- /Order notes -->
@@ -114,8 +108,10 @@
 					
 
 					<!-- Order Details -->
+					
+					
 					<div class="col-md-5 order-details">
-						<div class="section-title text-center">
+						<div class="section-title">
 							<h3 class="title">Your Order</h3>
 						</div>
 						
@@ -125,7 +121,7 @@
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th scope="col""><strong>PRODUCT</strong></th>
+									<th scope="col"><strong>PRODUCT</strong></th>
 									<th scope="col" class="text-right"><strong>TOTAL</strong></th>
 								</tr>
 							</thead>
@@ -157,7 +153,7 @@
 						</div>
 						</div>
 						
-						
+						<div class="">
 						<div class="payment-method">
 							{% for value, name in form.fields.payment_option.choices %}
 							<div class="input-radio">
@@ -169,9 +165,6 @@
 							{% endfor %}
 						</div>
 						<div class="input-checkbox">
-							{% comment %}
-							<input type="checkbox" id="terms">	
-							{% endcomment %}
 							{{ form.terms }}
 								<label for="terms">
 								<span></span>
@@ -179,12 +172,16 @@
 							</label>
 						</div>
 						{% if form.terms %}
-							<button class="primary-btn order-submit" type="submit" style="width: initial;">Place order</button>
+						<div class="">
+							<button class="primary-btn order-submit" type="submit">Place order</button>
+						</div>
 						{% else %}
-							<button class="primary-btn order-submit" type="submit" disabled>Place order</button>
+							<button class="primary-btn order-submit" type="submit" style="background: rgba(19, 171, 60, 0.4);" disabled>Place order</button>
 						{% endif %}
-							
+
 					</div>
+					</div>
+					
 					<!-- /Order Details -->
 				</form>
 				</div>

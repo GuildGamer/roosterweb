@@ -8,7 +8,7 @@
 
 <div class="center-div">
   <div class="section container">  
-<h1>{% trans "Sign Up" %}</h1>
+<h1>{% trans "Create an account" %}</h1>
 
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
@@ -20,7 +20,7 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button class="primaryAction primary-btn order-submit" type="submit">{% trans "Sign Up" %} &raquo;</button>
+  <button class="primaryAction primary-btn order-submit" type="submit">{% trans "Sign Up" %} &raquo;</button><span><bold> or</bold></span><i><a href="{% url 'base_app:sell' %}">{% trans " Sign Up as a Seller" %}</a></i>
 </form>
 </div>
 </div>

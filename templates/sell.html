@@ -1,11 +1,76 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 {% load static %}
 
-<form>
-    
-</form>
+<div class="section">
+   <div class="container" style="background-color: white;  border-radius: 8px;">
+    <div class="row">
+
+
+<form method="POST">
+    <div class="col-md-7">
+    {% if registered %}
+    <div class="text-center">
+    <h2>Thank you for registering!</h2>
+    </div>
+    {% else %}
+    <div class="section-title">
+        <h3 class="title">Sign Up as a seller</h3>
+    </div>
+        {% csrf_token %}
+        <h4 class="title">Personal details</h4>
+        <div class="form-group">
+            {{ v_form.first_name }}
+        </div>
+        <div class="form-group">
+            {{ v_form.last_name}}
+        </div>
+        <div class="form-group">
+            {{ v_form.username}}
+        </div>
+        <div class="form-group">
+            {{ v_detail_form.phone_number}}
+        </div>
+        <h4 class="title">Shop details</h4>
+        <div class="form-group">
+            {{ v_detail_form.shop_name }}
+        </div>
+        <div class="form-group">
+            {{ v_form.email }}
+        </div>
+        <div class="form-group">
+            {{ v_detail_form.store_category }}
+        </div>
+        <div class="form-group">
+            {{ v_detail_form.city}}
+        </div>  
+        <div class="form-group">
+            {{ v_form.password}}
+        </div>
+        <div class="form-group">
+            {{ v_form.password_verification}}
+        </div>
+
+        <div class="input-checkbox">
+            {{ v_detail_form.terms }}
+                <label for="terms">
+                <span></span>
+                I've read and accept the <a href="#">terms & conditions</a>
+            </label>
+        </div>
+        
+        <div style="padding-bottom: 15px; padding-top: 15px;">
+        <button class="primary-btn order-submit" type="submit" style="width: initial;">Continue</button>
+        
+        </div>
+        {% endif %}
+    </div>
+    </form>
+</div>
+</div>
+</div>
 
 {% endblock %}
