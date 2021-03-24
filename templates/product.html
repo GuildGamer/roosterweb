@@ -330,10 +330,10 @@
 													{% csrf_token %}
 													{% comment %}<input class="input" type="text" placeholder="Your Name"> {% endcomment %}
 													<div class="form-group">
-														{{ form.name }}
+														{{ form.review }}
 													</div>
 
-													<textarea class="input" placeholder="Your Review"></textarea>
+													{% comment %}<textarea class="input" placeholder="Your Review"></textarea> {% endcomment %}
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">

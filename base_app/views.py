@@ -20,7 +20,6 @@ context = {
     'items': Item.objects.all()
 }
 def item_list(request):
-
     return render(request, "index.html", context)
 
 
@@ -248,7 +247,7 @@ def remove_single_item_from_cart(request, slug):
 
     if order_qs.exists():
         order = order_qs[0]
-
+        
         if order.items.filter(item__slug = item.slug).exists():
             order_item = OrderItem.objects.filter(
                 item=item,
