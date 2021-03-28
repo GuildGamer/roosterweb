@@ -5,9 +5,11 @@
 
 {% block content %}
 
-
+<div class="container" style="background-color: white;  border-radius: 8px;">
 <div class="center-div">
-  <div class="section container">  
+<div class="section container" style="text-align: center;">  
+<div class="row">
+<div class="col-md-5 col-md-push-2">
 <h1>{% trans "Create an account" %}</h1>
 
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
@@ -20,8 +22,11 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button class="primaryAction primary-btn order-submit" type="submit">{% trans "Sign Up" %} &raquo;</button><span><bold> or</bold></span><i><a href="{% url 'base_app:sell' %}">{% trans " Sign Up as a Seller" %}</a></i>
+  <button class="primaryAction primary-btn order-submit" type="submit">{% trans "Sign Up" %} &raquo;</button><span><bold><br>or</bold></span><i><a href="{% url 'base_app:sell' %}">{% trans " Sign Up as a Seller" %}</a></i>
 </form>
+</div>
+</div>
+</div>
 </div>
 </div>
 

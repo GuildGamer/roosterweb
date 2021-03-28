@@ -6,9 +6,12 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-
+<div class="container" style="background-color: white;  border-radius: 8px;">
 <div class="center-div">
 <div class="section container">    
+<div class="section container" style="text-align: center;"> 
+<div class="row">
+<div class="col-md-5 col-md-push-2">
 <h1>{% trans "Sign In" %}</h1>
 
 {% get_providers as socialaccount_providers %}
@@ -47,8 +50,12 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
   </div>
   {% endif %}
   <a class="button secondaryAction primary-btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction primary-btn order-submit" type="submit">{% trans "Sign In" %}</button><span><bold> or</bold></span><i><a href="#">{% trans " Sign In as a Seller" %}</a></i>
+  <button class="primaryAction primary-btn order-submit" type="submit">{% trans "Sign In" %}</button><span><bold><br>or</bold></span><i><a href="#">{% trans " Sign In as a Seller" %}</a></i>
 </form>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
